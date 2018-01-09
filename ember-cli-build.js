@@ -1,6 +1,8 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var deploy = require('./config/deploy.js')(process.env.EMBER_ENV);
+
 const StaticSiteJson = require('broccoli-static-site-json');
 const MergeTrees = require('broccoli-merge-trees');
 const Funnel = require('broccoli-funnel');
@@ -31,7 +33,10 @@ const authorTree = new StaticSiteJson(`author`, {
 
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
-    // Add options here
+    fingerprint: {
+      prepend: `${deploy.gcloudUrl}/${deploy['gcloud-storage'] ? deploy['gcloud-storage'].bucket : ''}/`,
+      extensions: ['js', 'css', 'map']
+    }
   });
 
   // Use `app.import` to add additional libraries to the generated

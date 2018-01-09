@@ -57,7 +57,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    // here you can enable a production-specific feature
+    ENV.apiNamespace = 'leedsjs-website';
+    ENV.apiHost = 'http://storage.googleapis.com';
   }
 
   return ENV;
