@@ -1,6 +1,33 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const StaticSiteJson = require('broccoli-static-site-json');
+const MergeTrees = require('broccoli-merge-trees');
+const Funnel = require('broccoli-funnel');
+
+const attributes = ['uuid', 'title', 'slug', 'image', 'featured', 'page', 'status', 'language', 'meta_title', 'meta_description', 'date', 'tags'];
+const references = ['author']
+
+const jsonTrees = ['content', 'page'].map((contentFolder) => {
+  return new StaticSiteJson(contentFolder, {
+    attributes,
+    references,
+    contentFolder,
+    collections: [{
+      src: contentFolder,
+      output: `${contentFolder}.json`,
+    }],
+  });
+});
+
+const authorTree = new StaticSiteJson(`author`, {
+  contentFolder: 'author',
+  attributes: ['name', 'image', 'cover', 'bio', 'website', 'location'],
+  collections: [{
+    src: 'author',
+    output: 'author.json',
+  }]
+});
 
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
@@ -20,5 +47,5 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  return app.toTree();
+  return MergeTrees([app.toTree(), ...jsonTrees, authorTree]);
 };

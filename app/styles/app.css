@@ -1,0 +1,4 @@
+body.index-template div.site-header-content, body.index-template .site-nav-left .nav {
+    background: rgba(34,34,34,0.6);
+    background-clip: content-box;
+}
