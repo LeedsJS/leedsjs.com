@@ -1,10 +1,13 @@
 ---
 language: node_js
 node_js:
-  - "6"
+  - "8"
 
-sudo: false
 dist: trusty
+
+branches:
+  only:
+    - master
 
 addons:
   chrome: stable
@@ -24,3 +27,11 @@ before_install:
 script:
   - npm run lint:js
   - npm test
+
+jobs:
+  include:
+    - stage: Deployment
+      if: branch = master AND NOT type = pull_request
+      script: ember deploy production --activate
+      env:
+        - secure: "UEmFZp5TRVvGFLGufwGklBpriEmxeGbZtQhAbEyS2Wj/J5a91T+aURt24iqHkwMBPih3u3wHG3unUT/6mDOwGlOvHOaVpvJyMSzUUDNy5E+N1AizN3EO4I6PzyUZQjyumZ7EYdtQkOB0ukRxvV9bJ7c4x7EXtqJKRJyXSWwQ66CLU0LzZzcEPgkgpqBQTXnQ8wydeQOgvCwGJwVmQ5jHyCfzsrfnComV2beEHgyO497XDsBfw4SneydkixKq4Lg57JYjmnRqCYiAftfX9bBFO/7zkr7RhJ1tMm/jD3m40dAo5qx4DPUBurcFUldHjbHpY0PyqKaPzd0gfAyvA9upBEQOPFlsMvA9tM7Zfo8YKVDUyxF6Z+CIL5HWt0GrjwPtdTGsZb2GwKHzCn0DZQW/AOI7HHJ7N5bBLe/v8PvvTBeJxHsGE7N0kiF92ARK1vPnNCel/hNESheQJ/6WtFWHbajPlm6dz4A+1Bh77uJ7bt5odFqngmm6qHktHSNsgQnOtVx9UWpoVv1iDfTzvG13GFItVObcqdEB40KptRosDnmcrTMeSGLzQ8pUi9xkrUvRmN9DuG3z8zXCcul/Sq7GgVT0PjQpoP8i+glvdNhf6Uptuef5/elrZLu37WOhGN4/erM+YqqE1uZLNY87VO/rqTQ3149wHWFtRyYfziHrw5g="
