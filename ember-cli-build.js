@@ -1,8 +1,6 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
-var deploy = require('./config/deploy.js')(process.env.EMBER_ENV);
-// const resolve = require("resolve");
 
 const urls = [
   '/'
@@ -11,7 +9,7 @@ const urls = [
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
     fingerprint: {
-      prepend: `${deploy.gcloudUrl}/${deploy['gcloud-storage'] ? deploy['gcloud-storage'].bucket : ''}/`,
+      prepend: `http://www.leedsjs.com.s3-website-eu-west-1.amazonaws.com/`,
       extensions: ['js', 'css', 'map']
     },
     prember: {
