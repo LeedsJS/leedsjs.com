@@ -14,25 +14,24 @@ module.exports = function(deployTarget) {
       environment: "production"
     },
     pipeline: {
-      // alias: {
-      //   s3: { as: ['s3-standard', 's3-static'] },
-      // },
+      alias: {
+        s3: { as: ['s3-standard', 's3-xml'] },
+      },
       activateOnDeploy: true
     },
     "revision-data": {
       "type": "version-commit"
     },
-    s3: {
-      filePattern: '**/*.{js,css,png,gif,ico,jpg,map,xml,txt,svg,swf,eot,ttf,woff,woff2,otf,wasm,json,html}',
+    's3-standard': {
+      filePattern: '**/*.{js,css,png,gif,ico,jpg,map,txt,svg,swf,eot,ttf,woff,woff2,otf,wasm,json,html}',
       cacheControl: 'max-age=3600, public',
     },
-    // 's3-standard': {
-    //   filePattern: '**/*.{js,css,ico,map,xml,txt,svg,swf,eot,ttf,woff,woff2,otf,wasm}'
-    // },
-    // 's3-static': {
-    //   filePattern: "**/*.{png,gif,jpg,json,html}",
-    //   cacheControl: 'max-age=3600, public',
-    // },
+    's3-xml': {
+      filePattern: '**/*.xml',
+      cacheControl: 'no-cache, no-store, must-revalidate',
+      expires: 0,
+      manifestPath: null,
+    },
     's3-index': {
       allowOverwrite: true
     },
@@ -40,28 +39,17 @@ module.exports = function(deployTarget) {
 
   if (deployTarget === 'production') {
 
-    const bucket = 'www.leedsjs.com';
+    const bucket = 'leedsjs.com';
     const region = 'eu-west-1'
 
-    ENV['s3'].accessKeyId = credentials.key || process.env.AWS_KEY;
-    ENV['s3'].secretAccessKey = credentials.secret || process.env.AWS_SECRET;
-    ENV['s3'].bucket = bucket;
-    ENV['s3'].region = region;
+    const keys = ['s3-standard', 's3-xml', 's3-index'];
 
-    // ENV['s3-standard'].accessKeyId = credentials.key || process.env.AWS_KEY;
-    // ENV['s3-standard'].secretAccessKey = credentials.secret || process.env.AWS_SECRET;
-    // ENV['s3-standard'].bucket = bucket;
-    // ENV['s3-standard'].region = region;
-    //
-    // ENV['s3-static'].accessKeyId = credentials.key || process.env.AWS_KEY;
-    // ENV['s3-static'].secretAccessKey = credentials.secret || process.env.AWS_SECRET;
-    // ENV['s3-static'].bucket = bucket;
-    // ENV['s3-static'].region = region;
-
-    ENV["s3-index"].accessKeyId = credentials.key || process.env.AWS_KEY;
-    ENV["s3-index"].secretAccessKey = credentials.secret || process.env.AWS_SECRET;
-    ENV["s3-index"].bucket = bucket;
-    ENV["s3-index"].region = region;
+    keys.forEach((envKey) => {
+      ENV[envKey].accessKeyId = credentials.key || process.env.AWS_KEY;
+      ENV[envKey].secretAccessKey = credentials.secret || process.env.AWS_SECRET;
+      ENV[envKey].bucket = bucket;
+      ENV[envKey].region = region;
+    });
   }
 
   // Note: if you need to build some configuration asynchronously, you can return

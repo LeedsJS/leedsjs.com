@@ -22,12 +22,23 @@ module.exports = function(environment) {
       description: "LeedsJS is the home of a JavaScript user group that meets in Leeds on the last Wednesday of every month.",
       logo: "/images/LeedsJSLogo.png",
       cover: "/images/docks.jpg",
+      twitter: "leedsjs",
+      rssLogo: '/images/LeedsJSLogo.png',
       navigation: [
         { label: 'Home', route: 'index' },
         { label: 'Code of Conduct', route: 'page', id: 'code-of-conduct' },
         { label: 'Organisers & Sponsors', route: 'page', id: 'partners' },
         { label: 'About', route: 'page', id: 'about' }
       ]
+    },
+
+    'ember-meta': {
+      description: 'LeedsJS is the home of a JavaScript user group that meets in Leeds on the last Wednesday of every month.',
+      imgSrc: '/images/LeedsJSLogo.png',
+      siteName: 'LeedsJS',
+      title: 'LeedsJS',
+      twitterUsername: '@leedsjs',
+      url: 'https://leedsjs.com/'
     },
 
     APP: {
@@ -61,8 +72,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.apiNamespace = 'leedsjs-website';
-    ENV.apiHost = 'http://storage.googleapis.com';
+    ENV.blog.host = 'https://leedsjs.com';
   }
 
   return ENV;
