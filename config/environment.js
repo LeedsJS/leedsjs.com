@@ -41,6 +41,17 @@ module.exports = function(environment) {
       url: 'https://leedsjs.com/'
     },
 
+    metricsAdapters: [
+      {
+        name: 'GoogleAnalytics',
+        environments: ['production'],
+        config: {
+          id: 'UA-58901136-2',
+          hostname: 'leedsjs.com'
+        }
+      },
+    ],
+
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
@@ -73,18 +84,6 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV.blog.host = 'https://leedsjs.com';
-
-    ENV.analytics = {
-      integrations: [{
-        name: 'GoogleAnalytics',
-        config: {
-          id: 'UA-58901136-2',
-          set: {
-            hostname: 'leedsjs.com'
-          }
-        }
-      }]
-    };
   }
 
   return ENV;
