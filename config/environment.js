@@ -21,7 +21,7 @@ module.exports = function(environment) {
       title: "LeedsJS",
       description: "LeedsJS is the home of a JavaScript user group that meets in Leeds on the last Wednesday of every month.",
       logo: "/images/LeedsJSLogo.png",
-      cover: "/images/docks.jpg",
+      coverImage: "/images/docks.jpg",
       twitter: "leedsjs",
       rssLogo: '/images/LeedsJSLogo.png',
       navigation: [
