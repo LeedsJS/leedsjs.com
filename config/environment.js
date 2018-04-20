@@ -73,6 +73,18 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV.blog.host = 'https://leedsjs.com';
+
+    ENV.analytics = {
+      integrations: [{
+        name: 'GoogleAnalytics',
+        config: {
+          id: 'UA-58901136-2',
+          set: {
+            hostname: 'leedsjs.com'
+          }
+        }
+      }]
+    };
   }
 
   return ENV;
